@@ -1,10 +1,8 @@
 import useAuth from "../../Hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import LodingSpinner from "../../Shared/LodingSpinner";
-// import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { FcGoogle } from "react-icons/fc";
-// import LodingSpinner from "../../Shared/Loading/LodingSpinner";
+import LodingSpinner from "../../Shared/Loading/LodingSpinner";
 
 const Signup = () => {
   const { signIn, loading, signInWithGoogle } = useAuth();
@@ -21,8 +19,9 @@ const Signup = () => {
   const onSubmit = (data) => {
     signIn(data.email, data.password)
       .then((result) => {
-        reset();
-        navigate("/");
+        if (result) {
+          reset();
+        }
         // console.log(result);
       })
       .catch((err) => {
@@ -33,35 +32,19 @@ const Signup = () => {
   const handleGoogleLogin = () => {
     signInWithGoogle()
       .then((res) => {
-        console.log("user sing in with google", res);
-        navigate("/");
-        // console.log(res.user);
-        // const googleInfo = {
-        //   name: res.user.displayName,
-        //   email: res.user.email,
-        //   photoUrl: res.user.photoURL,
-        //   affiliated: false,
-        //   role: "employee",
-        // };
-        // axiosSecure
-        //   .post("/employee", googleInfo)
-        //   .then((res) => {
-        //     if (res.data?.insertedId) {
-        //       navigate("/dashboard/home");
-        //     }
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        // console.log("user sing in with google", res);
+        if (res) {
+          navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  //   if (loading) {
-  //     return <LodingSpinner></LodingSpinner>;
-  //   }
+  if (loading) {
+    return <LodingSpinner></LodingSpinner>;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen">

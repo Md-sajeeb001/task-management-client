@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { app } from "../../Firebase/Firebase";
 import useAxiosPublic from "../../Shared/useAxiosPublic";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
-  const navigate = useNavigate();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -66,15 +65,26 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("access-token", res.data?.token);
             setLoading(false);
           }
+          updateUserProfile(currentUser?.displayName, currentUser.photoURL)
+            .then((result) => {
+              if (result) {
+                toast.success(`Users Registration Successfully!`);
+              }
 
-          // save the user information in database!
+              const userInformation = {
+                email: currentUser.email,
+                name: currentUser.displayName,
+                photo: currentUser.photoURL,
+              };
 
-          axiosPublic.post("/users", userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log("user added to the database");
-              // navigate("/");
-            }
-          });
+              // save the user information in database!
+              axiosPublic.post("/users", userInformation).then((res) => {
+                if (res.data.insertedId) {
+                  console.log("user added to the database");
+                }
+              });
+            })
+            .catch((error) => console.log(error));
         });
       } else {
         localStorage.removeItem("access-token");
