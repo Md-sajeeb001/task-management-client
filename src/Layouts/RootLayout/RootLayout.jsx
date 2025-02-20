@@ -1,22 +1,22 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+// import Navbar from "../../components/Navbar/Navbar";
+// import Footer from "../../components/Footer/Footer";
 import Container from "../../Shared/Container/Container";
 
 const RootLayout = () => {
   return (
     <div>
-      <header>
+      {/* <header>
         <Navbar></Navbar>
-      </header>
+      </header> */}
       <Container>
         <main className="min-h-[calc(100vh-285px)]">
           <Outlet></Outlet>
         </main>
       </Container>
-      <footer>
+      {/* <footer>
         <Footer></Footer>
-      </footer>
+      </footer> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import LodingSpinner from "../../Shared/Loading/LodingSpinner";
 
 const Signup = () => {
-  const { createUser, loading, signInWithGoogle, user } = useAuth();
+  const { createUser, loading, signInWithGoogle } = useAuth();
 
   const {
     register,
@@ -21,6 +21,8 @@ const Signup = () => {
       .then((result) => {
         if (result) {
           reset();
+          navigate('/dashboard')
+          toast.success(`User Registration Successfully!`);
         }
       })
       .catch((err) => {
@@ -32,9 +34,9 @@ const Signup = () => {
     signInWithGoogle()
       .then((res) => {
         if (res) {
-          toast.success(`${user?.displayName} Registration Successfully!`);
+          toast.success(`User Registration Successfully!`);
         }
-        navigate("/");
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -46,16 +48,16 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center pt-8">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md ">
-        <h2 className="text-3xl font-semibold text-center text-blue-600 mb-6">
+        <h2 className="text-3xl font-semibold text-center text-[#d9af01] mb-6">
           Register Now
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <button
             onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-2 rounded-lg mb-3 hover:bg-blue-700"
+            className="w-full flex items-center justify-center gap-2 bg-[#d9af01] text-white py-2 rounded-lg mb-3 hover:bg-[#d9af01]"
           >
             <Link className="flex items-center gap-3">
               <FcGoogle></FcGoogle>Continue with Google
@@ -71,7 +73,7 @@ const Signup = () => {
             {...register("name", {
               required: "Name is required",
             })}
-            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-[#d9af01]"
           />
           {errors.name?.type === "required" && (
             <p className="text-red-600 text-xs">Name is required</p>
@@ -84,7 +86,7 @@ const Signup = () => {
             {...register("email", {
               required: "Email is required",
             })}
-            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-[#d9af01]"
           />
           {errors.email?.type === "required" && (
             <p className="text-red-600 text-xs">Email is required</p>
@@ -97,23 +99,23 @@ const Signup = () => {
             {...register("password", {
               required: "Password is required",
             })}
-            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-[#d9af01]"
           />
           {errors.password?.type === "required" && (
             <p className="text-red-600 text-xs">Password is required</p>
           )}
 
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+          <button className="w-full bg-[#d9af01] text-white py-2 rounded-lg hover:bg-[#d9af01]">
             <Link>Register Now</Link>
           </button>
 
           <p className="text-center text-gray-600 text-sm mt-4">
             By continuing with Google, or Email, you agree to our{" "}
-            <Link href="#" className="text-blue-500 hover:underline">
+            <Link href="#" className="text-[#d9af01] hover:underline">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="#" className="text-blue-500 hover:underline">
+            <Link href="#" className="text-[#d9af01] hover:underline">
               Privacy Policy
             </Link>
             .
@@ -121,7 +123,7 @@ const Signup = () => {
 
           <p className="text-center mt-3">
             Already signed up?{" "}
-            <Link to="/login" className="text-blue-500 hover:underline">
+            <Link to="/login" className="text-[#d9af01] hover:underline">
               Go to Login
             </Link>
           </p>

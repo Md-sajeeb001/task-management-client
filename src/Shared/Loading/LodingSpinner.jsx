@@ -10,7 +10,7 @@ const LodingSpinner = ({ smallHeight }) => {
         justify-center 
         items-center `}
     >
-      <GridLoader color="#115071" />
+      <GridLoader color="#d9af01" />
     </div>
   );
 };
