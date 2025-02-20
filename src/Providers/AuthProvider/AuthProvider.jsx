@@ -10,8 +10,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { app } from "../firebase/firebaseInit";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { app } from "../../Firebase/Firebase";
+import useAxiosPublic from "../../Shared/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
@@ -22,6 +23,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -53,8 +55,9 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      // console.log("CurrentUser-->", currentUser?.email);
+      console.log("CurrentUser-->", currentUser);
       setUser(currentUser);
+
       // get token form server
       if (currentUser) {
         const userInfo = { email: currentUser?.email };
@@ -63,6 +66,15 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("access-token", res.data?.token);
             setLoading(false);
           }
+
+          // save the user information in database!
+
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user added to the database");
+              // navigate("/");
+            }
+          });
         });
       } else {
         localStorage.removeItem("access-token");
