@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import DashboardHome from "../Pages/DashboardHome/DashboardHome";
 import PrivateRoute from "./PrivateRoute";
+import TaskManager from "../components/TaskManager/TaskManager";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "manage-tasks",
+        element: <TaskManager></TaskManager>,
+      },
+      {
+        path: "add-task",
         element: <DashboardHome></DashboardHome>,
       },
     ],

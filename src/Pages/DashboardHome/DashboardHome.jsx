@@ -1,26 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import useAuth from "../../Hooks/useAuth";
+// import { useNavigate } from "react-router-dom";
+// import useAuth from "../../Hooks/useAuth";
 import Container from "../../Shared/Container/Container";
-import DBLogo from "../../assets/DBLogo.jpg";
+// import DBLogo from "../../assets/DBLogo.jpg";
 import AddTaskForm from "../../components/AddTaskForm/AddTaskForm";
 
 const DashboardHome = () => {
-  const { user, logOut } = useAuth();
-  const navigate = useNavigate();
-  const handleLogOut = () => {
-    logOut()
-      .then((res) => {
-        if (res) {
-          navigate("/login");
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+  
 
   return (
     <div>
-      <nav>
-        <div className="navbar bg-base-100 shadow-sm lg:px-12">
+      {/* <nav>
+        <div className="navbar  bg-base-100 shadow-sm ">
           <div className="flex-1">
             <img src={DBLogo} className="w-10 h-10 rounded-full" alt="" />
           </div>
@@ -32,7 +22,10 @@ const DashboardHome = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full">
-                  <img alt="" src={user?.photoURL} />
+                  <img
+                    alt=""
+                    src={user?.photoURL}
+                  />
                 </div>
               </div>
               <ul
@@ -46,9 +39,9 @@ const DashboardHome = () => {
             </div>
           </div>
         </div>
-      </nav>
+      </nav> */}
       <Container>
-        <AddTaskForm></AddTaskForm>
+       <AddTaskForm></AddTaskForm>
       </Container>
     </div>
   );

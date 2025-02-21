@@ -1,11 +1,15 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+// import TaskManager from "../TaskManager/TaskManager";
 
 export default function AddTaskForm() {
   //   const [title, setTitle] = useState("");
   //   const [description, setDescription] = useState("");
+  // const categoris = ["To Do", "In Prograss", "Done"];
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -18,21 +22,24 @@ export default function AddTaskForm() {
     const taskInfo = {
       title: data.title,
       des: data.description,
-      date: new Date(),
+      timestamp: Date.now(),
       category: data.category,
     };
+
     axiosSecure
       .post("/tasks", taskInfo)
       .then((res) => {
         console.log(res);
         reset();
-        toast.success(`${data.category} will set`);
+        toast.success(`${data.category} Task Will Set`);
+        navigate("/dashboard/manage-tasks");
       })
       .catch((err) => [console.log(err)]);
   };
 
   return (
-    <div>
+    <div className="w-full h-full">
+      <h2 className="sm:text-4xl text-xl font-bold mb-8">Add Task </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-lg shadow p-4 mb-4"
@@ -107,6 +114,10 @@ export default function AddTaskForm() {
           </button>
         )}
       </form>
+
+      {/* <div>
+        <TaskManager></TaskManager>
+      </div> */}
     </div>
   );
 }
