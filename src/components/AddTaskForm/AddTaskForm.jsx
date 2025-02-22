@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+
 // import TaskManager from "../TaskManager/TaskManager";
 
 export default function AddTaskForm() {
@@ -10,6 +12,7 @@ export default function AddTaskForm() {
   // const categoris = ["To Do", "In Prograss", "Done"];
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const {
     register,
@@ -23,7 +26,7 @@ export default function AddTaskForm() {
       title: data.title,
       des: data.description,
       timestamp: Date.now(),
-      category: data.category,
+      category: "To-Do",
     };
 
     axiosSecure
@@ -39,7 +42,17 @@ export default function AddTaskForm() {
 
   return (
     <div className="w-full h-full">
-      <h2 className="sm:text-4xl text-xl font-bold mb-8">Add Task </h2>
+      {/* <h1></h1> */}
+      <h1 className="sm:text-4xl text-xl font-bold mb-8">
+        Welcome {user.displayName}
+      </h1>
+      <p className="text-justify pb-8">
+        The Add Task form allows users to efficiently create new tasks within
+        the system. Users can enter key task details such as title, description,
+        date it will be set Automatically. This form ensures that tasks are
+        well-defined, categorized, and assigned to the right individuals for
+        seamless workflow management.
+      </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-lg shadow p-4 mb-4"
@@ -55,6 +68,7 @@ export default function AddTaskForm() {
             type="text"
             name="title"
             id="title"
+            placeholder="add some title..."
             {...register("title", { required: true })}
             maxLength={50}
             className="mt-1 py-2 px-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#d9af01] focus:ring-[#d9af01]"
@@ -73,6 +87,7 @@ export default function AddTaskForm() {
           <textarea
             id="description"
             name="description"
+            placeholder="add some description...."
             {...register("description", { required: true })}
             maxLength={200}
             className="mt-1 py-2 px-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#d9af01] focus:ring-[#d9af01]"
@@ -81,7 +96,7 @@ export default function AddTaskForm() {
             <span className="text-red-600">description is required</span>
           )}
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="category"
             className="block text-sm font-medium text-gray-700"
@@ -97,7 +112,7 @@ export default function AddTaskForm() {
             <option value="In Progress">In Progress</option>
             <option value="Done">Done</option>
           </select>
-        </div>
+        </div> */}
         {errors ? (
           <button
             type="submit"
