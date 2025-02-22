@@ -1,73 +1,97 @@
-# Task Management Application
-### Short Description
-A task management application where users can add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: To-Do, In Progress, and Done. The app ensures real-time synchronization and persistence of task data.
+# 📝 Task Management Application  
 
-Live Link
-You can view the live application here: Task Management App
+A simple and efficient task management app that allows users to **add, edit, delete, and reorder tasks** using a **drag-and-drop interface**. Tasks are categorized into **To-Do, In Progress, and Done**, with real-time updates stored in a database for persistence.  
 
-Dependencies
-The following dependencies are required to run this application:
+🚀 **Live Demo**: [Task Management App](https://task-management-b0fbe.web.app)  
 
-Firebase Authentication
-MongoDB
-Express.js
-Vite.js
-React
-react-beautiful-dnd (or any other drag-and-drop library)
-WebSockets or MongoDB Change Streams for real-time updates
-Swal (for alerts)
-react-hook-form (for forms)
+---
 
-Installation Steps
-Clone this repository:
+## 📌 Features  
 
-git clone <repository-url>
-Navigate to the project directory:
+✅ **User Authentication** – Only authenticated users can access the app (Google Sign-In via Firebase).  
+✅ **Task Management** – Add, edit, delete, and reorder tasks within three categories: **To-Do, In Progress, and Done**.  
+✅ **Drag-and-Drop** – Move tasks between categories and reorder them within a category.  
+✅ **Real-Time Sync** – Changes are saved instantly using **MongoDB, WebSockets, or Optimistic UI Updates**.  
+✅ **Modern UI** – Clean, minimalistic, and fully responsive design for **desktop & mobile**.  
 
+---
 
+## 🛠 Technologies Used  
+
+### **Frontend**  
+- ⚡ [Vite.js](https://vitejs.dev/) + [React.js](https://react.dev/)  
+- 🎨 [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd) (for drag-and-drop)  
+- 📱 Responsive design with a **maximum of four colors** for a clean look  
+
+### **Backend**  
+- 🖥 [Express.js](https://expressjs.com/) (Node.js framework)  
+- 🗄 [MongoDB](https://www.mongodb.com/) (database for task storage)  
+- 🔄 Real-time updates via **MongoDB Change Streams, WebSockets, or Optimistic UI**  
+
+### **Authentication & Hosting**  
+- 🔐 [Firebase Authentication](https://firebase.google.com/) (Google Sign-In)  
+- ☁️ Hosted on **Firebase**  
+
+---
+
+## 📦 Dependencies  
+
+Make sure you have the following installed before running the project:  
+
+- **Node.js** (v14 or later)  
+- **MongoDB** (local or cloud instance)  
+- **Firebase account** (for authentication)  
+
+Key npm dependencies used:  
+- `react`  
+- `vite`  
+- `express`  
+- `mongoose`  
+- `firebase`  
+- `react-beautiful-dnd`  
+
+---
+
+## ⚙️ Installation Steps  
+
+### **1️⃣ Clone the Repository**  
+```sh
+git clone https://github.com/your-username/task-management-app.git
 cd task-management-app
-Install dependencies for both frontend and backend:
-
-For frontend:
-
-
-cd frontend
+2️⃣ Install Dependencies
+Frontend
+sh
+Copy
+Edit
+cd client
 npm install
-For backend:
-
-
-cd backend
+Backend
+sh
+Copy
+Edit
+cd server
 npm install
-Set up your Firebase and MongoDB configurations in the respective environment files.
+3️⃣ Set Up Environment Variables
+Create a .env file in the server folder and add:
 
-Run the development server for the frontend:
-
-
-cd frontend
+env
+Copy
+Edit
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+FIREBASE_API_KEY=your_firebase_api_key
+4️⃣ Start the Development Servers
+Backend
+sh
+Copy
+Edit
+cd server
 npm run dev
-Start the backend server:
-
-
-cd backend
-npm run start
-Your application should now be running locally. Visit http://localhost:3000 for the frontend and check the backend API at http://localhost:5000.
-
-Technologies Used
-Frontend:
-
-Vite.js
-React.js
-react-beautiful-dnd (or any drag-and-drop library)
-TailwindCSS (for styling)
-Backend:
-
-Node.js with Express.js
-MongoDB for task storage
-WebSockets / MongoDB Change Streams for real-time synchronization
-Authentication:
-
-Firebase Authentication (Google Sign-In)
-Other Tools:
-
-React Hook Form (for forms)
-SweetAlert2 (for alerts)
+Frontend
+sh
+Copy
+Edit
+cd client
+npm run dev
+5️⃣ Open the App
+Go to http://localhost:5173/ in your browser.
