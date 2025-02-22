@@ -7,6 +7,8 @@ import { MdEditSquare } from "react-icons/md";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
 
 export const Task = ({ task, refetch }) => {
   //   console.log(task._id);
@@ -45,11 +47,43 @@ export const Task = ({ task, refetch }) => {
     });
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
+  //   const handleUpdate = (e) => {
+  //     e.preventDefault();
+
+  //     axiosSecure
+  //       .put(`/tasks-update/${selectedTask._id}`, selectedTask)
+  //       .then((res) => {
+  //         if (res.data.modifiedCount > 0) {
+  //           Swal.fire({
+  //             title: "Updated!",
+  //             text: "Your task has been updated.",
+  //             icon: "success",
+  //           });
+  //           document.getElementById("my_modal_5").close();
+  //           refetch(); // Refresh tasks
+  //         }
+  //       });
+  //   };
+  const { user } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    // const taskInfo = {
+    //   title: data.title,
+    //   des: data.des,
+    //   timestamp: Date.now(),
+    //   category: data.category,
+    //   email: user.email,
+    // };
 
     axiosSecure
-      .put(`/tasks-update/${selectedTask._id}`, selectedTask)
+      .patch(`/tasks-update/${selectedTask._id}`, selectedTask)
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           Swal.fire({
@@ -94,7 +128,7 @@ export const Task = ({ task, refetch }) => {
             </h3>
 
             {/* Update Form */}
-            <form onSubmit={handleUpdate}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label
                   htmlFor="title"
@@ -105,12 +139,14 @@ export const Task = ({ task, refetch }) => {
                 <input
                   type="text"
                   id="title"
-                  value={selectedTask?.title || ""}
-                  placeholder={selectedTask?.title || ""}
+                  //   value={selectedTask?.title || ""}
                   readOnly
+                  placeholder={selectedTask?.title || task.title}
+                  value={selectedTask?.title || task.title} // Allow editing the title
                   onChange={(e) =>
                     setSelectedTask({ ...selectedTask, title: e.target.value })
                   }
+                  {...register("title", { required: true })}
                   className="mt-1 text-black py-2 px-4 block w-full rounded-md  shadow-sm focus:border-[#d9af01] focus:ring-[#d9af01]"
                 />
               </div>
@@ -124,14 +160,13 @@ export const Task = ({ task, refetch }) => {
                 </label>
                 <textarea
                   id="des"
-                  placeholder={selectedTask?.des || ""}
-                  value={selectedTask?.des || ""}
+                  readOnly
+                  placeholder={selectedTask?.des || task.des}
+                  value={selectedTask?.des || task.des} // Allow editing the description
                   onChange={(e) =>
-                    setSelectedTask({
-                      ...selectedTask,
-                      des: e.target.value,
-                    })
+                    setSelectedTask({ ...selectedTask, des: e.target.value })
                   }
+                  {...register("des", { required: true })}
                   className="mt-1 text-black py-2 px-4 block w-full rounded-md  shadow-sm focus:border-[#d9af01] focus:ring-[#d9af01]"
                 />
               </div>
@@ -146,13 +181,14 @@ export const Task = ({ task, refetch }) => {
                 </label>
                 <select
                   id="category"
-                  value={selectedTask?.category || "To-Do"}
+                  value={selectedTask?.category || task.category} // Allow category change
                   onChange={(e) =>
                     setSelectedTask({
                       ...selectedTask,
                       category: e.target.value,
                     })
                   }
+                  {...register("category", { required: true })}
                   className="mt-1 text-black py-2 px-4 block w-full rounded-md  shadow-sm focus:border-[#d9af01] focus:ring-[#d9af01]"
                 >
                   <option value="To-Do">To-Do</option>
