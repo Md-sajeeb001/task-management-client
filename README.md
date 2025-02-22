@@ -60,37 +60,28 @@ git clone https://github.com/your-username/task-management-app.git
 cd task-management-app
 2️⃣ Install Dependencies
 Frontend
-sh
-Copy
-Edit
+
 cd client
 npm install
 Backend
-sh
-Copy
-Edit
+
 cd server
 npm install
 3️⃣ Set Up Environment Variables
 Create a .env file in the server folder and add:
 
 env
-Copy
-Edit
+
 MONGO_URI=your_mongodb_connection_string
 PORT=5000
 FIREBASE_API_KEY=your_firebase_api_key
 4️⃣ Start the Development Servers
 Backend
-sh
-Copy
-Edit
+
 cd server
 npm run dev
 Frontend
-sh
-Copy
-Edit
+
 cd client
 npm run dev
 5️⃣ Open the App
