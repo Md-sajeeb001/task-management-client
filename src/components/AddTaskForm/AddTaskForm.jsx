@@ -27,6 +27,7 @@ export default function AddTaskForm() {
       des: data.description,
       timestamp: Date.now(),
       category: "To-Do",
+      email: user.email,
     };
 
     axiosSecure
