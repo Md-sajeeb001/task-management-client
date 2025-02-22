@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-// import { useSortable } from "@dnd-kit/sortable";
-// import { CSS } from "@dnd-kit/utilities";
 
 import "./Task.css";
 import { format } from "date-fns";
@@ -11,15 +9,7 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 
 export const Task = ({ task, refetch }) => {
-  //   console.log(task);
-  //     const { category, timestamp, des, title, id } = task;
-  //   const { attributes, listeners, setNodeRef, transform, transition } =
-  //     useSortable({ id });
-
-  //   const style = {
-  //     transition,
-  //     transform: CSS.Transform.toString(transform),
-  //   };
+  //   console.log(task._id);
   const axiosSecure = useAxiosSecure();
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -41,7 +31,7 @@ export const Task = ({ task, refetch }) => {
       confirmButtonText: "Yes, Reject it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/tasks/${id}`).then((res) => {
+        axiosSecure.delete(`/tasks-delete/${id}`).then((res) => {
           if (res.data) {
             Swal.fire({
               title: "Deleted!",
@@ -58,17 +48,19 @@ export const Task = ({ task, refetch }) => {
   const handleUpdate = (e) => {
     e.preventDefault();
 
-    axiosSecure.put(`/tasks/${selectedTask._id}`, selectedTask).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        Swal.fire({
-          title: "Updated!",
-          text: "Your task has been updated.",
-          icon: "success",
-        });
-        document.getElementById("my_modal_5").close();
-        refetch(); // Refresh tasks
-      }
-    });
+    axiosSecure
+      .put(`/tasks-update/${selectedTask._id}`, selectedTask)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Updated!",
+            text: "Your task has been updated.",
+            icon: "success",
+          });
+          document.getElementById("my_modal_5").close();
+          refetch(); // Refresh tasks
+        }
+      });
   };
 
   return (
@@ -93,6 +85,8 @@ export const Task = ({ task, refetch }) => {
         >
           <MdEditSquare />
         </button>
+
+        {/* modal */}
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
             <h3 className="font-bold text-lg text-slate-800 pb-4">
@@ -112,7 +106,7 @@ export const Task = ({ task, refetch }) => {
                   type="text"
                   id="title"
                   value={selectedTask?.title || ""}
-                  placeholder={selectedTask?.title}
+                  placeholder={selectedTask?.title || ""}
                   readOnly
                   onChange={(e) =>
                     setSelectedTask({ ...selectedTask, title: e.target.value })
@@ -130,7 +124,7 @@ export const Task = ({ task, refetch }) => {
                 </label>
                 <textarea
                   id="des"
-                  placeholder={selectedTask?.des}
+                  placeholder={selectedTask?.des || ""}
                   value={selectedTask?.des || ""}
                   onChange={(e) =>
                     setSelectedTask({
@@ -171,7 +165,7 @@ export const Task = ({ task, refetch }) => {
               <div className="modal-action">
                 <button
                   type="submit"
-                  className="bg-[#d9af01] text-white px-4 py-2 rounded hover:bg-[#c09b01]"
+                  className="btn bg-[#d9af01] text-white px-4 py-2 rounded hover:bg-[#c09b01]"
                 >
                   Update Task
                 </button>

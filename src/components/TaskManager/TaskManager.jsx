@@ -228,7 +228,7 @@
 
 // export default TaskManager;
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 // import {
 //   DndContext,
 //   PointerSensor,
@@ -241,8 +241,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 // import { MdEditSquare } from "react-icons/md";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
-import { Task } from "../Task/Task";
+// import { Task } from "../Task/Task";
 import TaskCategory from "../TaskCategory/TaskCategory";
+import { IoMdAddCircle } from "react-icons/io";
+import { Link } from "react-router-dom";
+import LodingSpinner from "../../Shared/Loading/LodingSpinner";
 
 const TaskManager = () => {
   const axiosSecure = useAxiosSecure();
@@ -265,55 +268,23 @@ const TaskManager = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  // Drag-and-Drop Mutation
-  //   const updateTaskCategoryMutation = useMutation({
-  //     mutationFn: async ({ taskId, category }) => {
-  //       await axiosSecure.patch(`/tasks/${taskId}`, { category });
-  //     },
-  //     onMutate: async ({ taskId, category }) => {
-  //       await queryClient.cancelQueries(["tasks", user?.email]);
-  //       const previousTasks = queryClient.getQueryData(["tasks", user?.email]);
-
-  //       queryClient.setQueryData(["tasks", user?.email], (old) =>
-  //         old.map((task) => (task._id === taskId ? { ...task, category } : task))
-  //       );
-
-  //       return { previousTasks };
-  //     },
-  //     onError: (err, variables, context) => {
-  //       queryClient.setQueryData(["tasks", user?.email], context.previousTasks);
-  //     },
-  //     onSettled: () => {
-  //       queryClient.invalidateQueries(["tasks", user?.email]);
-  //     },
-  //   });
-
-  //   // Handle Drag & Drop
-  //   const handleDragEnd = (event) => {
-  //     const { active, over } = event;
-  //     if (!over) return;
-
-  //     updateTaskCategoryMutation.mutate({ taskId: active.id, category: over.id });
-  //   };
-
-  //   const sensors = useSensors(useSensor(PointerSensor));
-
-  if (isLoading) return <p>Loading tasks...</p>;
+  if (isLoading) return <LodingSpinner></LodingSpinner>;
   if (error) return <p>Error fetching tasks: {error.message}</p>;
 
   // Delete Task Mutation
 
   return (
     <div className="w-full p-6 text-slate-300">
-      <h1 className="text-3xl font-bold text-black sm:pb-8 pb-5">
-        Manage Tasks
-      </h1>
-      <div
-      // collisionDetection={closestCorners}
-      // onDragEnd={handleDragEnd}
-      // sensors={sensors}
-      >
-        <div className="sm:flex gap-3 rounded-lg w-full">
+      <div className="flex  justify-between">
+        <h1 className="text-3xl font-bold text-black sm:pb-8 pb-5">
+          Manage Tasks
+        </h1>
+        <Link to="/dashboard/add-task">
+          <IoMdAddCircle className="text-black text-3xl"></IoMdAddCircle>
+        </Link>
+      </div>
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-lg w-full">
           {["To-Do", "In Progress", "Done"].map((category) => (
             <TaskCategory
               key={category}
